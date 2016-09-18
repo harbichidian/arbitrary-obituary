@@ -1,7 +1,7 @@
 class Hash
 	def weighted_sample
 		n = rand * self.values.reduce(:+)
-		self.detect{ |k, v| (n -= v) < 0 }.first
+		self.detect{ |k, v| (n -= v) < 0 }
 	end
 end
 
