@@ -15,54 +15,83 @@ class Obituary
 		output
 	end
 	
-	def method_missing(m)
-		instVarName = "@#{m}"
-		classVarName = "@@#{m}s"
-		
-		if instance_variable_defined? instVarName
-			instance_variable_get instVarName
-		elsif self.class.class_variable_defined? classVarName	# TODO: Need to use class methods and define a class method_missing. When the class method_missing returns, save that in the instance variable before returning
-			classVar = self.class.class_variable_get classVarName
-			if classVar.respond_to?(:weighted_sample)
-				instance_variable_set(instVarName, classVar.weighted_sample)
-			elsif classVar.respond_to?(:sample)
-				instance_variable_set(instVarName, classVar.sample)
+	###########
+	# Content #
+	###########
+	
+	def age
+		@age ||= (25..120).sample	# TODO: Change this to a weighted hash, based on available mortality rates by age
+	end
+	
+	def announcement
+		@announcement ||= [
+			"#{firstName} #{middleInitial ? middleInitial + " " : ""}#{lastName} (#{birthDate} - #{deathDate})"
+		].sample
+	end
+	
+	def birth
+		@birth ||= [
+			"#{pronoun.capitalize} was born #{birthDate} in #{birthLocation} to #{fatherFirstName} #{fatherLastName} and #{motherFirstName} #{motherLastName}. #{pronoun} attended #{highSchool}"
+		].sample
+	end
+	
+	def birthDate
+		@birthDate ||= [].sample
+	end
+	
+	def death
+		@death ||= [
+			"#{deathEuphemism} #{preposition} #{deathCause} at the age of #{age}",
+			"#{deathEuphemism} #{deathLocation} at the age of #{age}"
+		].sample
+	end
+	
+	def deathCause
+		@deathCause ||= [].sample
+	end
+	
+	def deathDate
+		@deathDate ||= [].sample
+	end
+	
+	def deathEuphemism
+		@deathEuphemism ||= [].sample
+	end
+	
+	def firstName
+		@firstName ||= [].sample
+	end
+	
+	def gender
+		@gender ||= {
+			"male": 138053563,
+			"female": 143368343
+		}.weighted_sample
+	end
+	
+	def lastName
+		@lastName ||= [].sample
+	end
+	
+	def middleInitial
+		@middleInitial ||= [].sample
+	end
+	
+	def preposition
+		@preposition ||= [].sample
+	end
+	
+	def pronoun
+		if @pronoun then @pronoun
+		else
+			case gender
+			when "male"
+				@pronoun = "he"
+			when "female"
+				@pronoun = "she"
 			end
 		end
 	end
-	
-	@@ages = 25..120	# TODO: Change this to a weighted hash, based on available mortality rates by age
-	
-	@@announcements = [
-		"#{firstName} #{middleInitial ? middleInitial + " " : ""}#{lastName} (#{birthDate} - #{deathDate})"
-	]
-	
-	@@births = [
-		"#{pronoun.capitalize} was born #{birthDate} in #{birthLocation} to #{fatherFirstName} #{fatherLastName} and #{motherFirstName} #{motherLastName}. #{pronoun} attended #{highSchool}"
-	]
-	
-	@@birthDates = []
-	
-	@@deaths = [
-		"#{deathEuphemism} #{preposition} #{deathCause} at the age of #{age}",
-		"#{deathEuphemism} #{deathLocation} at the age of #{age}"
-	]
-	
-	@@deathCauses = []
-	
-	@@deathDates = []
-	
-	@@deathEuphemisms = []
-	
-	@@firstNames = []
-	
-	@@lastNames = []
-	
-	@@middleInitials = []
-	
-	@@prepositions = []
-	
-	@@pronouns
 end
 
 ##
