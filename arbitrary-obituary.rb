@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext'
+
 class Hash
 	def weighted_sample
 		n = rand * self.values.reduce(:+)
@@ -20,7 +23,7 @@ class Obituary
 	###########
 	
 	def age
-		@age ||= (25..120).sample	# TODO: Change this to a weighted hash, based on available mortality rates by age
+		@age ||= deathDate.year - birthDate.year - (deathDate.month < birthDate.month ? 1 : 0)
 	end
 	
 	def announcementTemplate
@@ -36,7 +39,7 @@ class Obituary
 	end
 	
 	def birthDate
-		@birthDate ||= [].sample
+		@birthDate ||= Time.new - Array(25..110).sample.years	# TODO: Change this to a weighted hash, based on available mortality rates by age
 	end
 	
 	def deathTemplate
@@ -51,7 +54,7 @@ class Obituary
 	end
 	
 	def deathDate
-		@deathDate ||= [].sample
+		@deathDate ||= Time.new - Array(1..35).sample.days
 	end
 	
 	def deathEuphemism
