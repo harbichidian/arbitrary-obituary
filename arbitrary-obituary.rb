@@ -7,7 +7,7 @@ end
 
 class Obituary
 	def output
-		"#{announcement} #{death} #{birth}"	# TODO: Expand this
+		"#{announcementTemplate} #{deathTemplate} #{birthTemplate}"	# TODO: Expand this
 	end
 	
 	def reoutput
@@ -23,14 +23,14 @@ class Obituary
 		@age ||= (25..120).sample	# TODO: Change this to a weighted hash, based on available mortality rates by age
 	end
 	
-	def announcement
-		@announcement ||= [
+	def announcementTemplate
+		@announcementTemplate ||= [
 			"#{firstName} #{middleInitial ? middleInitial + " " : ""}#{lastName} (#{birthDate} - #{deathDate})"
 		].sample
 	end
 	
-	def birth
-		@birth ||= [
+	def birthTemplate
+		@birthTemplate ||= [
 			"#{pronoun.capitalize} was born #{birthDate} in #{birthLocation} to #{fatherFirstName} #{fatherLastName} and #{motherFirstName} #{motherLastName}. #{pronoun} attended #{highSchool}"
 		].sample
 	end
@@ -39,7 +39,7 @@ class Obituary
 		@birthDate ||= [].sample
 	end
 	
-	def death
+	def deathTemplate
 		@death ||= [
 			"#{deathEuphemism} #{preposition} #{deathCause} at the age of #{age}",
 			"#{deathEuphemism} #{deathLocation} at the age of #{age}"
