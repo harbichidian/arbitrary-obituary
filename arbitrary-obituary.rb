@@ -96,7 +96,10 @@ class Obituary
 	end
 	
 	def lastName
-		@lastName ||= [].sample
+		@lastName ||= CSV::read("names/last.txt")
+		.map{ |row| [row[0].capitalize, row[1].to_i] }
+		.to_h
+		.weighted_sample
 	end
 	
 	def _location
