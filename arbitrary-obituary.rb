@@ -34,7 +34,7 @@ class Obituary
 	
 	def birthTemplate
 		@birthTemplate ||= [
-			"#{pronoun.capitalize} was born #{birthDate} in #{birthLocation} to #{fatherFirstName} #{fatherLastName} and #{motherFirstName} #{motherLastName}. #{pronoun} attended #{highSchool}"
+			"#{pronounSubject.capitalize} was born #{birthDate} in #{birthLocation} to #{fatherFirstName} #{fatherLastName} and #{motherFirstName} #{motherLastName}. #{pronounSubject.capitalize} attended #{highSchool}"
 		].sample
 	end
 	
@@ -84,15 +84,27 @@ class Obituary
 		@preposition ||= [].sample
 	end
 	
-	def pronoun
-		if @pronoun then @pronoun
-		else
-			case gender
-			when "male"
-				@pronoun = "he"
-			when "female"
-				@pronoun = "she"
-			end
+	def pronounObject
+		case gender
+		when "male" then "him"
+		when "female" then "her"
+		when "neuter" then "them"
+		end
+	end
+	
+	def pronounPossessive
+		case gender
+		when "male" then "his"
+		when "female" then "her"
+		when "neuter" then "their"
+		end
+	end
+	
+	def pronounSubject
+		case gender
+		when "male" then "he"
+		when "female" then "she"
+		when "neuter" then "they"
 		end
 	end
 end
