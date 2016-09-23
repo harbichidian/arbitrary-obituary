@@ -4,7 +4,7 @@ require 'active_support/core_ext'
 class Hash
 	def weighted_sample
 		n = rand * self.values.reduce(:+)
-		self.detect{ |k, v| (n -= v) < 0 }
+		self.detect{ |k, v| (n -= v) < 0 }.first
 	end
 end
 
