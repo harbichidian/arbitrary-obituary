@@ -1,5 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
+require 'csv'
 
 class Hash
 	def weighted_sample
@@ -62,7 +63,14 @@ class Obituary
 	end
 	
 	def firstName
-		@firstName ||= [].sample
+		return @firstName if @firstName
+		
+		names = CSV::read("names/first/yob#{birthDate.year}.txt")
+		.map{ |row| {:name => row[0], :gender => (row[1] == 'F' ? 'female' : 'male'), :count => row[2].to_i} }
+		.select{ |row| row[:gender].to_s == gender.to_s }
+		.map{ |row| [row[:name], row[:count]] }
+		.to_h
+		.weighted_sample
 	end
 	
 	def gender
