@@ -95,7 +95,10 @@ class Obituary
 	end
 	
 	def preposition
-		@preposition ||= [].sample
+		@preposition ||= %w[
+			from
+			of
+		].sample
 	end
 	
 	def pronounObject
