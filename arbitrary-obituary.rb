@@ -80,9 +80,7 @@ class Obituary
 	end
 	
 	def firstName
-		return @firstName if @firstName
-		
-		names = CSV::read("names/first/yob#{birthDate.year}.txt")
+		@firstName ||= CSV::read("names/first/yob#{birthDate.year}.txt")
 		.map{ |row| {:name => row[0], :gender => (row[1] == 'F' ? 'female' : 'male'), :count => row[2].to_i} }
 		.select{ |row| row[:gender].to_s == gender.to_s }
 		.map{ |row| [row[:name], row[:count]] }
