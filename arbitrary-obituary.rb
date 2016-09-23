@@ -43,6 +43,10 @@ class Obituary
 		@birthDate ||= Time.new - Array(25..110).sample.years	# TODO: Change this to a weighted hash, based on available mortality rates by age
 	end
 	
+	def birthLocation
+		@birthLocation ||= _location.sample
+	end
+	
 	def deathTemplate
 		@death ||= [
 			"#{deathEuphemism} #{preposition} #{deathCause} at the age of #{age}",
@@ -68,6 +72,13 @@ class Obituary
 		].sample
 	end
 	
+	def deathLocation
+		@deathLocation ||= [
+			"in #{pronounPossessive} home",
+			"in #{_location.sample}"
+		].sample
+	end
+	
 	def firstName
 		return @firstName if @firstName
 		
@@ -88,6 +99,40 @@ class Obituary
 	
 	def lastName
 		@lastName ||= [].sample
+	end
+	
+	def _location
+		firstPart = %w[
+			Lake
+			River
+			Green
+			Clover
+			Hill
+			Maple
+			Oak
+			Ash
+			Birch
+			Pine
+			Larch
+			Elm
+		].sample
+		lastPart = %w[
+			view
+			creek
+			bridge
+			land
+			ville
+			ton
+			shire
+			town
+			vale
+			wood
+			ford
+			brook
+			dale
+		].sample
+		
+		return "#{firstPart}#{lastPart}"	# TODO: Replace this with an actual placename list
 	end
 	
 	def middleInitial
