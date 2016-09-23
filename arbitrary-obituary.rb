@@ -48,9 +48,9 @@ class Obituary
 	end
 	
 	def deathTemplate
-		@death ||= [
-			"#{deathEuphemism} #{preposition} #{deathCause} at the age of #{age}",
-			"#{deathEuphemism} #{deathLocation} at the age of #{age}"
+		@deathTemplate ||= [
+			"#{deathEuphemism} #{preposition} #{deathCause} at the age of #{age}.",
+			"#{deathEuphemism} #{deathLocation} at the age of #{age}."
 		].sample
 	end
 	
