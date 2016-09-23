@@ -59,7 +59,13 @@ class Obituary
 	end
 	
 	def deathEuphemism
-		@deathEuphemism ||= [].sample
+		@deathEuphemism ||= [
+			"died",
+			"passed",
+			"passed away",
+			"lost #{pronounPossessive} battle",
+			"lost #{pronounPossessive} fight"
+		].sample
 	end
 	
 	def firstName
