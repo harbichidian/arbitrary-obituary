@@ -137,7 +137,12 @@ class Obituary
 	end
 	
 	def middleInitial
-		@middleInitial ||= [].sample
+		@middleInitial ||= CSV::read("names/first/yob#{birthDate.year}.txt")
+		.map{ |row| {:name => row[0], :gender => (row[1] == 'F' ? 'female' : 'male'), :count => row[2].to_i} }
+		.select{ |row| row[:gender].to_s == gender.to_s }
+		.tap{ |n| puts "Reducing #{n.length} rows like #{n.first} or #{n[1]} into initials" }
+		.reduce(Hash.new(0)){ |m, row| m[row[:name].first] += row[:count] }
+		.weighted_sample
 	end
 	
 	def preposition
