@@ -44,7 +44,7 @@ class Obituary
 	end
 	
 	def birthLocation
-		@birthLocation ||= _location.sample
+		@birthLocation ||= location!
 	end
 	
 	def deathTemplate
@@ -75,7 +75,7 @@ class Obituary
 	def deathLocation
 		@deathLocation ||= [
 			"in #{pronounPossessive} home",
-			"in #{_location.sample}"
+			"in #{location!}",
 		].sample
 	end
 	
@@ -102,7 +102,7 @@ class Obituary
 		.weighted_sample
 	end
 	
-	def _location
+	def location!
 		firstPart = %w[
 			Lake
 			River
