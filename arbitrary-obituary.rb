@@ -55,7 +55,12 @@ class Obituary
 	end
 	
 	def deathCause
-		@deathCause ||= [].sample
+		@deathCause ||= [
+			"cancer",
+			"old age",
+			"#{pronounPossessive} wounds",
+			"a broken heart"
+		].sample
 	end
 	
 	def deathDate
@@ -76,6 +81,7 @@ class Obituary
 		@deathLocation ||= [
 			"in #{pronounPossessive} home",
 			"in #{location!}",
+			"at #{location!} Hospital"
 		].sample
 	end
 	
@@ -90,8 +96,8 @@ class Obituary
 	
 	def gender
 		@gender ||= {
-			"male": 138053563,
-			"female": 143368343
+			"male" => 138053563,
+			"female" => 143368343
 		}.weighted_sample
 	end
 	
